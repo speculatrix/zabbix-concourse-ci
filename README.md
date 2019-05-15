@@ -10,3 +10,5 @@ See
 * https://concourse-ci.org/
 * https://github.com/concourse
 
+
+![Zabbix Screenshot](https://raw.githubusercontent.com/speculatrix/zabbix-concourse-ci/master/zabbix_template__concourse_ci.png)
