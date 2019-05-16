@@ -1,10 +1,18 @@
 #!/bin/bash
 
-# put this script into /opt/zabbix/bin and make it executable so that
-# the zabbix agent and the zabbix_ci.conf file reference it correctly.
-
 ARG1="$1"
 FLY="/usr/local/bin/fly"
+FLYRC="$HOME/.flyrc"
+
+# check if we need to log in again - the .flyrc token lasts a day, 86400 seconds
+# so we'll renew just before that.
+NOW_DATE=$( date +%s )
+FLYRC_DATE=$( stat --printf=%Y "$FLYRC" )
+FLY_AGE=$(( $NOW_DATE - $FLYRC_DATE ))
+if [ $FLY_AGE -gt 86000 ] ; then
+	fly -t aa login -c https://concourse.aws.agileanalog.com -k -u admin -p abc123
+fi
+
 
 if [ ! -x "$FLY" ] ; then
 	echo "Error, fly command not found"
